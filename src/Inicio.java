@@ -8,17 +8,27 @@ import javax.swing.JOptionPane;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.table.DefaultTableModel;
+import java.text.DecimalFormat;
+
+
+/*
+0901-17-65 Antonio Manuel Alejandro Garcia Gonzalez.
+
+*/
 
 public class Inicio extends javax.swing.JFrame {
 
     //Declaracion de variables tipo Entero
     int Salario_Bas, Tot_Deduc, Tot_Percep, Sueldo_Liquido, num_dept, Dept, Nrand;
+    double ISR;
     //Declaracion de variables tipo Texto
     String Nombre_Emp;
     //Declaracion de la Matriz y Vector de la Planilla
     String Matriz [][] = {};
-    //Vector usado unicamente para los encabezados
-    String Encab [] = {"Nombre","Salario Base","Total Deducciones","Total Percepciones","Sueldo Liquido","Num Dept."};
+    
+    String Encab [] = {"Nombre","Salario Base","Total Deducciones","Total Percepciones","ISR","Sueldo Liquido","Num Dept."};
+    
+    //vector para 2da tabla
     String Encabezado [] = {"Num Dept.","Total Sueldo Liq"};
     //Declaracion de variable random para el sueldo y los totales
     Random NumR = new Random();
@@ -30,8 +40,8 @@ public class Inicio extends javax.swing.JFrame {
     public Inicio() {
         initComponents();
         //Sintaxis para el guardado de los datos en la Tabla
-         Modelo = new DefaultTableModel(Matriz, Encab);
-         ModeloVect=new DefaultTableModel(Matriz, Encabezado);
+        Modelo = new DefaultTableModel(Matriz, Encab);
+        ModeloVect=new DefaultTableModel(Matriz, Encabezado);
         tblDatos.setModel(Modelo);  
         tblData.setModel(ModeloVect);
     }
@@ -47,26 +57,61 @@ public class Inicio extends javax.swing.JFrame {
     Sueldo_Liquido = Salario_Bas- Tot_Deduc + Tot_Percep ; 
     //Uso del random para el Numero de Departamento, el +1 es para evitar el 0
     Dept =NumR.nextInt(4)+1;
+    
+    //ciclo if para el valor de ISR
+    if(Sueldo_Liquido>=2600 && Sueldo_Liquido<=5000){
+        
+        ISR=Sueldo_Liquido*0.03;
+        
+    }else{
+        if(Sueldo_Liquido>=5001 && Sueldo_Liquido<=10000){
+            
+             ISR=Sueldo_Liquido*0.05;
+             
+        }else{
+            if(Sueldo_Liquido>=10001){
+                
+                 ISR=Sueldo_Liquido*0.1;
+                 
+            }//fin tercer if
+        }//fin segundo if
+    }//fin primer if
+    
 
 }
 
 public void Ingreso_Tabla(){
     //Obtenemos el valor del Nombre de la caja de texto
     Nombre_Emp = txtNom_Emp.getText();
+    int t1=0,t2=0,t3=0,t4=0,t5=0;
     
-    String Nombre, Salario_Base, Tot_Deducc, Tot_Percept, Sal_Liq,Depart;
+    String Nombre, Salario_Base, Tot_Deducc, Tot_Percept, Sal_Liq,Depart,Isr;
+    //declaracion de formato para mostrar solamente 2 decimales en isr
+   DecimalFormat formato = new DecimalFormat ("0.00");
     
-    //Igualacion de las variables con los calculos y datos aleatorios para la matriz
+    //Igualacion y conversion de las variables con los calculos y datos aleatorios para la matriz
     Nombre = Nombre_Emp;
     Depart = String.valueOf(Dept);
     Salario_Base = String.valueOf(Salario_Bas);
     Tot_Deducc = String.valueOf(Tot_Deduc);
     Tot_Percept = String.valueOf(Tot_Percep);
     Sal_Liq = String.valueOf(Sueldo_Liquido);
+    Isr=String.valueOf(formato.format(ISR));
     //Guardado de los datos en un vector para ingresar a la tabla
-    String Datos [] = {Nombre,Salario_Base,Tot_Deducc,Tot_Percept,Sal_Liq,Depart};
+    String Datos [] = {Nombre,Salario_Base,Tot_Deducc,Tot_Percept,Isr,Sal_Liq,Depart};
     //Agregando el vector a la fila de la tabla
     Modelo.addRow(Datos);
+   /*
+    switch(Dept){
+        case 1:{t1+=Sueldo_Liquido;}break;
+        case 2:{t2+=Sueldo_Liquido;}break;
+        case 3:{t3+=Sueldo_Liquido;}break;
+        case 4:{t4+=Sueldo_Liquido;}break;
+        case 5:{t5+=Sueldo_Liquido;}break;
+ 
+    }
+    */
+    
 }
     
     //Metodo para obtener numeros aleatorios
@@ -116,19 +161,19 @@ public void Ingreso_Tabla(){
 
         tblDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Salario Base", "Total Deducciones", "Total Percepcion", "Sueldo Liquido", "Numero Dept."
+                "Nombre", "Salario Base", "Total Deducciones", "Total Percepcion", "Sueldo Liquido", "Numero Dept.", "ISR"
             }
         ));
         jScrollPane1.setViewportView(tblDatos);
@@ -139,18 +184,18 @@ public void Ingreso_Tabla(){
             Pnl_Ingreso_PlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pnl_Ingreso_PlanillaLayout.createSequentialGroup()
                 .addGroup(Pnl_Ingreso_PlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(Pnl_Ingreso_PlanillaLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lblNom_Emp)
-                        .addGap(45, 45, 45)
-                        .addComponent(txtNom_Emp, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 305, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pnl_Ingreso_PlanillaLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnIngresar)
-                .addGap(349, 349, 349))
+                        .addGroup(Pnl_Ingreso_PlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(Pnl_Ingreso_PlanillaLayout.createSequentialGroup()
+                                .addComponent(lblNom_Emp)
+                                .addGap(45, 45, 45)
+                                .addComponent(txtNom_Emp, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 863, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(Pnl_Ingreso_PlanillaLayout.createSequentialGroup()
+                        .addGap(370, 370, 370)
+                        .addComponent(btnIngresar)))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         Pnl_Ingreso_PlanillaLayout.setVerticalGroup(
             Pnl_Ingreso_PlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,23 +230,22 @@ public void Ingreso_Tabla(){
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(Pnl_Ingreso_Planilla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(308, 308, 308)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 20, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(Pnl_Ingreso_Planilla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(330, 330, 330))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Pnl_Ingreso_Planilla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         pack();
@@ -221,16 +265,19 @@ public void Ingreso_Tabla(){
             //Llamada a los metodos 
             Llenado_Datos();
             Ingreso_Tabla();
-            TotalesVector();
+           
             //Limpieza de la caja de texto
-            
             txtNom_Emp.setText(" ");
             
             cont+=1; 
-        
-        }
-        
-        
+        /*
+       
+        if(cont==10){
+             TotalesVector();
+         }
+   
+        */
+         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
