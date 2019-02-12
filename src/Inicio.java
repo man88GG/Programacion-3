@@ -18,8 +18,10 @@ import java.text.DecimalFormat;
 
 public class Inicio extends javax.swing.JFrame {
 
-    //Declaracion de variables tipo Entero
-    int Salario_Bas, Tot_Deduc, Tot_Percep, Sueldo_Liquido, num_dept, Dept, Nrand;
+     //Declaracion de variables tipo Entero
+    int Salario_Bas, Tot_Deduc, Tot_Percep, Sueldo_Liquido, num_dept, Dept, Nrand,cont=0;
+    //variables para 2da tabla
+   int t1=0,t2=0,t3=0,t4=0,t5=0;
     double ISR;
     //Declaracion de variables tipo Texto
     String Nombre_Emp;
@@ -29,7 +31,7 @@ public class Inicio extends javax.swing.JFrame {
     String Encab [] = {"Nombre","Salario Base","Total Deducciones","Total Percepciones","ISR","Sueldo Liquido","Num Dept."};
     
     //vector para 2da tabla
-    String Encabezado [] = {"Num Dept.","Total Sueldo Liq"};
+  String Encabezado [] = {"Numero Dept.","1","2","3","4","5"};
     //Declaracion de variable random para el sueldo y los totales
     Random NumR = new Random();
     //Declaracion para ingresar datos en la Tabla
@@ -77,6 +79,14 @@ public class Inicio extends javax.swing.JFrame {
         }//fin segundo if
     }//fin primer if
     
+       switch(Dept){
+        case 1:{t1+=Sueldo_Liquido;}break;
+        case 2:{t2+=Sueldo_Liquido;}break;
+        case 3:{t3+=Sueldo_Liquido;}break;
+        case 4:{t4+=Sueldo_Liquido;}break;
+        case 5:{t5+=Sueldo_Liquido;}break;
+    }
+    
 
 }
 
@@ -123,12 +133,16 @@ public void Ingreso_Tabla(){
     
  public void TotalesVector(){
 
-        String []agregar=new String[2];
-        for(int a=1;a<=5;a++){
-        agregar[0]=String.valueOf(a);
-      
+        //agrega a la segunda tabla los totales de sueldo liquido
+        String []agregar=new String[6];
+        agregar[0]="Sueldo Liquido Total";
+        agregar[1]=String.valueOf(t1);
+        agregar[2]=String.valueOf(t2);
+        agregar[3]=String.valueOf(t3);
+        agregar[4]=String.valueOf(t4);
+        agregar[5]=String.valueOf(t5);
+        
         ModeloVect.addRow(agregar);
-        }
  }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -147,6 +161,7 @@ public void Ingreso_Tabla(){
         tblDatos = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblData = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -173,7 +188,7 @@ public void Ingreso_Tabla(){
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Salario Base", "Total Deducciones", "Total Percepcion", "Sueldo Liquido", "Numero Dept.", "ISR"
+                "Nombre", "Salario Base", "Total Deducciones", "Total Percepcion", "ISR", "Sueldo Liquido", "Numero Dept."
             }
         ));
         jScrollPane1.setViewportView(tblDatos);
@@ -213,17 +228,23 @@ public void Ingreso_Tabla(){
 
         tblData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {"Salario Liquido", null, null, null, null, null}
             },
             new String [] {
-                "Num. Dept", "Total Sueldos Liq"
+                "Num. Dept", "1", "2", "3", "4", "5"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tblData);
+
+        jLabel1.setText("Tabla de Totales Salario Liquido por Dept");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -233,51 +254,53 @@ public void Ingreso_Tabla(){
                 .addContainerGap()
                 .addComponent(Pnl_Ingreso_Planilla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(386, 386, 386)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(330, 330, 330))
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Pnl_Ingreso_Planilla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        
-        int cont=0;
-        
+
         //Verificacion de que la caja de texto no este vacia
         if(txtNom_Emp.getText().length()==0){
             JOptionPane.showMessageDialog(null,"No ha ingresado el Nombre del Empleado");
         }else
-        if(cont>11){
+        if(cont>9){
             JOptionPane.showMessageDialog(null,"Ha Ingresado la Cantidad Maxima de Empleados");
         }else{
-            //Llamada a los metodos 
+            //Llamada a los metodos
             Llenado_Datos();
             Ingreso_Tabla();
-           
+
             //Limpieza de la caja de texto
             txtNom_Emp.setText(" ");
-            
-            cont+=1; 
-        /*
-       
-        if(cont==10){
-             TotalesVector();
-         }
-   
-        */
-         }
+
+            cont+=1;
+
+            if(cont==10){
+                TotalesVector();
+            }
+
+        }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
@@ -317,12 +340,19 @@ public void Ingreso_Tabla(){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Pnl_Ingreso_Planilla;
+    private javax.swing.JPanel Pnl_Ingreso_Planilla1;
     private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnIngresar1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblNom_Emp;
+    private javax.swing.JLabel lblNom_Emp1;
     private javax.swing.JTable tblData;
     private javax.swing.JTable tblDatos;
+    private javax.swing.JTable tblDatos1;
     private javax.swing.JTextField txtNom_Emp;
+    private javax.swing.JTextField txtNom_Emp1;
     // End of variables declaration//GEN-END:variables
 }
