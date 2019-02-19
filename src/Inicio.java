@@ -19,16 +19,17 @@ import java.text.DecimalFormat;
 public class Inicio extends javax.swing.JFrame {
 
      //Declaracion de variables tipo Entero
-    int Salario_Bas, Tot_Deduc, Tot_Percep, Sueldo_Liquido, num_dept, Dept, Nrand,cont=0;
+    int Salario_Bas, Tot_Deduc, Tot_Percep, Sueldo_Liquido, num_dept, Dept, Nrand,cont=0,Pagar_Iggs;
+    String Pago_Iggs="";
     //variables para 2da tabla
    int t1=0,t2=0,t3=0,t4=0,t5=0;
-    double ISR;
+    double ISR,IGGS;
     //Declaracion de variables tipo Texto
     String Nombre_Emp;
     //Declaracion de la Matriz y Vector de la Planilla
     String Matriz [][] = {};
     
-    String Encab [] = {"Nombre","Salario Base","Total Deducciones","Total Percepciones","ISR","Sueldo Liquido","Num Dept."};
+    String Encab [] = {"Nombre","Salario Base","Total Deducciones","Total Percepciones","Paga IGGS ?","Cantidad IGGS","ISR","Sueldo Liquido","Num Dept."};
     
     //vector para 2da tabla
     String Encabezado [] = {"Numero Dept.","1","2","3","4","5"};
@@ -55,8 +56,10 @@ public class Inicio extends javax.swing.JFrame {
     Salario_Bas = Numero_random();
     Tot_Deduc = Numero_random();
     Tot_Percep = Numero_random();
+    Pagar_Iggs=NumR.nextInt(2);
+    
     //Operacion aritmetica para el sueldo liquido
-    Sueldo_Liquido = Salario_Bas- Tot_Deduc + Tot_Percep ; 
+    Sueldo_Liquido = Salario_Bas- Tot_Deduc + Tot_Percep-(int)IGGS-(int)ISR; 
     //Uso del random para el Numero de Departamento, el +1 es para evitar el 0
     Dept =NumR.nextInt(4)+1;
     
@@ -79,6 +82,20 @@ public class Inicio extends javax.swing.JFrame {
         }//fin segundo if
     }//fin primer if
     
+    
+    if(Pagar_Iggs==0){
+        IGGS=0;
+        Pago_Iggs="NO";
+        
+    }else
+        if(Pagar_Iggs==1){
+            IGGS=Salario_Bas*0.483;
+            Pago_Iggs="SI";
+        }
+    
+    
+    
+    
        switch(Dept){
         case 1:{t1+=Sueldo_Liquido;}break;
         case 2:{t2+=Sueldo_Liquido;}break;
@@ -95,7 +112,7 @@ public void Ingreso_Tabla(){
     Nombre_Emp = txtNom_Emp.getText();
     int t1=0,t2=0,t3=0,t4=0,t5=0;
     
-    String Nombre, Salario_Base, Tot_Deducc, Tot_Percept, Sal_Liq,Depart,Isr;
+    String Nombre, Salario_Base, Tot_Deducc, Tot_Percept, Sal_Liq,Depart,Isr,iggs,pagar_iggs;
     //declaracion de formato para mostrar solamente 2 decimales en isr
    DecimalFormat formato = new DecimalFormat ("0.00");
     
@@ -105,10 +122,12 @@ public void Ingreso_Tabla(){
     Salario_Base = String.valueOf(Salario_Bas);
     Tot_Deducc = String.valueOf(Tot_Deduc);
     Tot_Percept = String.valueOf(Tot_Percep);
+    pagar_iggs=(Pago_Iggs);
+    iggs=String.valueOf(formato.format(IGGS));
     Sal_Liq = String.valueOf(Sueldo_Liquido);
     Isr=String.valueOf(formato.format(ISR));
     //Guardado de los datos en un vector para ingresar a la tabla
-    String Datos [] = {Nombre,Salario_Base,Tot_Deducc,Tot_Percept,Isr,Sal_Liq,Depart};
+    String Datos [] = {Nombre,Salario_Base,Tot_Deducc,Tot_Percept,pagar_iggs,iggs,Isr,Sal_Liq,Depart};
     //Agregando el vector a la fila de la tabla
     Modelo.addRow(Datos);
  
@@ -121,6 +140,8 @@ public void Ingreso_Tabla(){
        int NUMERO_RAND = ThreadLocalRandom.current().nextInt(2000, 5000);
        return ThreadLocalRandom.current().nextInt(2000, 5000);
    }
+    
+  
     
  public void TotalesVector(){
 
@@ -174,19 +195,19 @@ public void Ingreso_Tabla(){
 
         tblDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Salario Base", "Total Deducciones", "Total Percepcion", "ISR", "Sueldo Liquido", "Numero Dept."
+                "Nombre", "Salario Base", "Total Deducciones", "Total Percepcion", "Paga IGSS ?", "Cantidad IGGS ", "ISR", "Sueldo Liquido", "Numero Dept."
             }
         ));
         jScrollPane1.setViewportView(tblDatos);
@@ -195,6 +216,10 @@ public void Ingreso_Tabla(){
         Pnl_Ingreso_Planilla.setLayout(Pnl_Ingreso_PlanillaLayout);
         Pnl_Ingreso_PlanillaLayout.setHorizontalGroup(
             Pnl_Ingreso_PlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pnl_Ingreso_PlanillaLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnIngresar)
+                .addGap(363, 363, 363))
             .addGroup(Pnl_Ingreso_PlanillaLayout.createSequentialGroup()
                 .addGroup(Pnl_Ingreso_PlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Pnl_Ingreso_PlanillaLayout.createSequentialGroup()
@@ -204,12 +229,8 @@ public void Ingreso_Tabla(){
                         .addComponent(txtNom_Emp, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(Pnl_Ingreso_PlanillaLayout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 863, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(35, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pnl_Ingreso_PlanillaLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnIngresar)
-                .addGap(363, 363, 363))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 844, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         Pnl_Ingreso_PlanillaLayout.setVerticalGroup(
             Pnl_Ingreso_PlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,14 +295,14 @@ public void Ingreso_Tabla(){
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Pnl_Ingreso_Planilla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Pnl_Ingreso_Planilla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
