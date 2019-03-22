@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import java.sql.*;
 import javax.swing.JOptionPane;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -177,6 +178,7 @@ public void Ingreso_Tabla(){
         btnIngresar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDatos = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblData = new javax.swing.JTable();
@@ -212,6 +214,13 @@ public void Ingreso_Tabla(){
         ));
         jScrollPane1.setViewportView(tblDatos);
 
+        jButton1.setText("Mostrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout Pnl_Ingreso_PlanillaLayout = new javax.swing.GroupLayout(Pnl_Ingreso_Planilla);
         Pnl_Ingreso_Planilla.setLayout(Pnl_Ingreso_PlanillaLayout);
         Pnl_Ingreso_PlanillaLayout.setHorizontalGroup(
@@ -223,7 +232,9 @@ public void Ingreso_Tabla(){
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 844, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(Pnl_Ingreso_PlanillaLayout.createSequentialGroup()
                         .addGap(358, 358, 358)
-                        .addComponent(btnIngresar)))
+                        .addComponent(btnIngresar)
+                        .addGap(120, 120, 120)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         Pnl_Ingreso_PlanillaLayout.setVerticalGroup(
@@ -232,7 +243,9 @@ public void Ingreso_Tabla(){
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(Pnl_Ingreso_PlanillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -319,7 +332,38 @@ public void Ingreso_Tabla(){
             Ingreso_Tabla();
             TotalesVector();      
         
+            
+            
+            
     }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+         
+      try{
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/umg", "root", "");
+            PreparedStatement pst = cn.prepareStatement("select * empleado.nombre_empleado");
+  
+            ResultSet rs = pst.executeQuery();
+
+            if(rs.next()){
+               tblDatos.setValueAt(rs.getString("empleados.nombre_empleado"), (1), 0);
+               
+                             
+                cn.close();
+            } else {
+                JOptionPane.showMessageDialog(null, "Puesto no Encontrado");
+            }
+
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, "No se ha podido Realizar la Busqueda");
+
+        }   
+        
+
+
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -359,6 +403,7 @@ public void Ingreso_Tabla(){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Pnl_Ingreso_Planilla;
     private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
