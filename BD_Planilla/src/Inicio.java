@@ -19,7 +19,7 @@ import java.text.DecimalFormat;
 public class Inicio extends javax.swing.JFrame {
 
   //Declaracion de variables tipo Entero
-    int Salario_Bas, Tot_Deduc, Tot_Percep, Sueldo_Liquido, num_dept, Dept, Nrand,cont=0;
+    int Salario_Bas, Tot_Deduc, Tot_Percep, Sueldo_Liquido, num_dept, Dept, Nrand;
     String Pago_Iggs,Pagar_Iggs="";
    
     //variables para 2da tabla
@@ -29,7 +29,7 @@ public class Inicio extends javax.swing.JFrame {
     String Nombre_Emp;
     //Declaracion de la Matriz y Vector de la Planilla
     String Matriz [][] = {};
-    
+    String MatrizData[][] = {{}, {}};
     String Encab [] = {"Nombre","Salario Base","Total Deducciones","Total Percepciones","Paga IGGS ?","Cantidad IGGS","ISR","Sueldo Liquido","Num Dept."};
     
     //vector para 2da tabla
@@ -42,10 +42,11 @@ public class Inicio extends javax.swing.JFrame {
     DefaultTableModel Tabla = new DefaultTableModel();
  
     public Inicio() {
+        
         initComponents();
         //Sintaxis para el guardado de los datos en la Tabla
         Modelo = new DefaultTableModel(Matriz, Encab);
-        ModeloVect=new DefaultTableModel(Matriz, Encabezado);
+        ModeloVect=new DefaultTableModel(MatrizData, Encabezado);
         tblDatos.setModel(Modelo);  
         tblData.setModel(ModeloVect);
     }
@@ -59,7 +60,7 @@ public class Inicio extends javax.swing.JFrame {
     Tot_Percep = Numero_random();
     
     //Uso del random para el Numero de Departamento, el +1 es para evitar el 0
-    Dept=NumR.nextInt(4)+1;
+    Dept=NumR.nextInt(5)+1;
     
     //ciclo if para identificar si esta Solvente para Iggs o no
     if(Pago_Iggs.equals("1")){
@@ -102,6 +103,7 @@ public class Inicio extends javax.swing.JFrame {
     
      //Operacion aritmetica para el sueldo liquido
     Sueldo_Liquido = Salario_Bas- Tot_Deduc + Tot_Percep-(int)IGGS-(int)ISR;
+    
     
     //Switch para ir sumando el sueldo Liquido Total de cada departamento 
        switch(Dept){
@@ -154,15 +156,12 @@ public void Ingreso_Tabla(){
  public void TotalesVector(){
 
         //agrega a la segunda tabla los totales de sueldo liquido
-        String []agregar=new String[6];
-        agregar[0]="Sueldo Liquido Total";
-        agregar[1]=String.valueOf(t1);
-        agregar[2]=String.valueOf(t2);
-        agregar[3]=String.valueOf(t3);
-        agregar[4]=String.valueOf(t4);
-        agregar[5]=String.valueOf(t5);
-        
-        ModeloVect.addRow(agregar);
+       
+        ModeloVect.setValueAt(Integer.toString(t1), 0, 1);
+        ModeloVect.setValueAt(Integer.toString(t2), 0, 2);
+        ModeloVect.setValueAt(Integer.toString(t3), 0, 3);
+        ModeloVect.setValueAt(Integer.toString(t4), 0, 4);
+        ModeloVect.setValueAt(Integer.toString(t5), 0, 5); 
            
  }
     /**
@@ -311,24 +310,15 @@ public void Ingreso_Tabla(){
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
 
          //Verificacion de que la caja de texto no este vacia
-        if(cont>9){
-            JOptionPane.showMessageDialog(null,"Ha Ingresado la Cantidad Maxima de Empleados");
-        }else{
-            for(int a=0;a<=10;a++){
+       
+            
             //Llamada a los metodos
             Nombre_Emp = JOptionPane.showInputDialog(null,"Ingrese Nombre del Empleado");
             Pago_Iggs = JOptionPane.showInputDialog(null,"¿ Esta Solvente de IGGS ?\n"+"1. SI\n"+"2. NO");
             Llenado_Datos();
-            
             Ingreso_Tabla();
-             cont+=1;
-            
-             //Ciclo if para cuando se llega al Maximo de 10 Empleados registrados muestra el Total Sueldo Liquido
-            } 
-            if(cont==11){
-                TotalesVector();
-            }
-        }
+            TotalesVector();      
+        
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
