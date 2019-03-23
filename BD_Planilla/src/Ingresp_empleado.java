@@ -10,6 +10,7 @@
  */
 import java.sql.*;
 import javax.swing.JOptionPane;
+
 public class Ingresp_empleado extends javax.swing.JFrame {
 
     /**
@@ -28,22 +29,37 @@ public class Ingresp_empleado extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel5 = new javax.swing.JLabel();
         btn_Ingreso_Login = new javax.swing.JButton();
+        txtsalario = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         txtcodigo_puesto = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
         btn_Busqueda_Login = new javax.swing.JButton();
+        combopuesto = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
+        combodept = new javax.swing.JComboBox<>();
         txtnombre_puesto = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
         txtnombre_puesto1 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        txtpuestobusqueda = new javax.swing.JTextField();
+        txtsalariobusqueda = new javax.swing.JTextField();
+        txtdepart = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtcodigo_puesto1 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
         txtLimpiar = new javax.swing.JButton();
         btn_Busqueda_Login2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btn_Ingreso_Login.setText("Ingreso");
+        jLabel5.setText("Salario");
+
+        btn_Ingreso_Login.setText("Ingresar Empleado");
         btn_Ingreso_Login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_Ingreso_LoginActionPerformed(evt);
@@ -52,6 +68,10 @@ public class Ingresp_empleado extends javax.swing.JFrame {
 
         jLabel1.setText("Codigo Puesto");
 
+        jLabel6.setText("Codigo Puesto");
+
+        jLabel7.setText("Codigo Dept");
+
         btn_Busqueda_Login.setText("Buscar");
         btn_Busqueda_Login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -59,11 +79,71 @@ public class Ingresp_empleado extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Nombre Puesto");
+        combopuesto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "----------------", "Gerente", "Supervisor", "Contador", "Reclutador", "Programador", "Tecnico", "Planificador" }));
 
-        jLabel2.setText("Codigo Puesto");
+        jLabel3.setText("Nombre Empleado");
+
+        combodept.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "----------------", "Proyectos", "Informatica", "Capacitacion y Desarrollo", "Reclutamiento y Seleccion", "Nominas" }));
+
+        txtnombre_puesto1.setEnabled(false);
 
         jLabel4.setText("Nombre Puesto");
+
+        jLabel8.setText("Salario");
+
+        jLabel9.setText("Codigo Puesto");
+
+        jLabel10.setText("Codigo Dept");
+
+        txtpuestobusqueda.setEnabled(false);
+
+        txtsalariobusqueda.setEnabled(false);
+
+        txtdepart.setEnabled(false);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel10))
+                .addGap(59, 59, 59)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtdepart, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtsalariobusqueda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                        .addComponent(txtnombre_puesto1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtpuestobusqueda, javax.swing.GroupLayout.Alignment.LEADING)))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(txtnombre_puesto1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtsalariobusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtpuestobusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtdepart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jLabel2.setText("Codigo Puesto");
 
         txtLimpiar.setText("Limpiar");
         txtLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -83,42 +163,51 @@ public class Ingresp_empleado extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_Ingreso_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
-                        .addComponent(btn_Busqueda_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
-                        .addComponent(txtLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel2))
-                        .addGap(59, 59, 59)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtcodigo_puesto1, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                            .addComponent(txtnombre_puesto1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(31, 31, 31)
-                .addComponent(btn_Busqueda_Login2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1))
-                .addGap(59, 59, 59)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtcodigo_puesto, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
-                    .addComponent(txtnombre_puesto))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(53, 371, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel7))
+                                .addGap(59, 59, 59)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(combodept, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtcodigo_puesto)
+                                        .addComponent(txtnombre_puesto)
+                                        .addComponent(txtsalario)
+                                        .addComponent(combopuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(198, 198, 198)
+                .addComponent(btn_Ingreso_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(btn_Busqueda_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(50, 50, 50)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_Busqueda_Login2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtcodigo_puesto1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -127,99 +216,185 @@ public class Ingresp_empleado extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtnombre_puesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(53, 53, 53)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Ingreso_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_Busqueda_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_Busqueda_Login2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtsalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(combopuesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(combodept, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btn_Ingreso_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtcodigo_puesto1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(txtnombre_puesto1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_Busqueda_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_Busqueda_Login2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_Ingreso_LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Ingreso_LoginActionPerformed
-        try{
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/umg", "root", "");
-            PreparedStatement pst = cn.prepareStatement("insert into puesto values(?,?)");
 
-            pst.setString(1, txtcodigo_puesto.getText().trim());
-            pst.setString(2, txtnombre_puesto.getText().trim());
+        String caso_puesto,cod_puesto="";
+        caso_puesto=String.valueOf(combopuesto.getSelectedItem());
 
-            pst.executeUpdate();
-            txtcodigo_puesto.setText("");
-            txtnombre_puesto.setText("");
+        String caso_dept,cod_dept="";
+        caso_dept=String.valueOf(combodept.getSelectedItem());
+        //if para que seleccione en los combos algo diferente de ---------
+        if (caso_puesto=="----------------" || caso_dept=="----------------"){
+            //mensaje de error
+            JOptionPane.showMessageDialog(null,"No ha Completado Todos los Datos");
+        }else{
+            //conexion a la BD
+            try{
+                Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/umg", "root", "");
+                PreparedStatement pst = cn.prepareStatement("insert into empleado values(?,?,?,?,?)");
 
-            JOptionPane.showMessageDialog(null,"Registro Exitoso");
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null,"Error al acceder a la Base de Datos");
-        }
- 
+                switch(caso_puesto){
+                    case "Gerente":{cod_puesto="P1";}break;
+                    case "Supervisor":{cod_puesto="P2";}break;
+                    case "Contador":{cod_puesto="P3";}break;
+                    case "Reclutador":{cod_puesto="P4";}break;
+                    case "Programador":{cod_puesto="P5";}break;
+                    case "Tecnico":{cod_puesto="P6";}break;
+                    case "Planificador":{cod_puesto="P7";}break;
+
+                }
+
+                switch(caso_dept){
+                    case "Proyectos":{cod_dept="D1";}break;
+                    case "Informatica":{cod_dept="D2";}break;
+                    case "Capacitacion y Desarrollo":{cod_dept="D3";}break;
+                    case "Reclutamiento y Seleccion":{cod_dept="D4";}break;
+                    case "Nominas":{cod_dept="D5";}break;
+
+                }
+
+                pst.setString(1, txtcodigo_puesto.getText().trim());
+                pst.setString(2, txtnombre_puesto.getText().trim());
+                pst.setString(3, txtsalario.getText().trim());
+                pst.setString(4,cod_puesto);
+                pst.setString(5 ,cod_dept);
+
+                pst.executeUpdate();
+                txtcodigo_puesto.setText("");
+                txtnombre_puesto.setText("");
+                txtsalario.setText("");
+
+                JOptionPane.showMessageDialog(null,"Registro Exitoso");
+            }catch (Exception e){
+
+                JOptionPane.showMessageDialog(null,"Error al acceder a la Base de Datos");
+            }
+
+        }//fin if
     }//GEN-LAST:event_btn_Ingreso_LoginActionPerformed
 
     private void btn_Busqueda_LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Busqueda_LoginActionPerformed
 
+        String puesto,depto,showpuesto="",showdepto="";
+
         try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/umg", "root", "");
-            PreparedStatement pst = cn.prepareStatement("select * from puesto where codigo_puesto = ?");
-            pst.setString(1, txtcodigo_puesto.getText().trim());
+            PreparedStatement pst = cn.prepareStatement("select * from empleado where codigo_empleado = ?");
+            pst.setString(1, txtcodigo_puesto1.getText().trim());
 
             ResultSet rs = pst.executeQuery();
 
             if(rs.next()){
-                txtcodigo_puesto1.setText(rs.getString("codigo_puesto"));
-                txtnombre_puesto1.setText(rs.getString("nombre_puesto"));
+
+                txtnombre_puesto1.setText(rs.getString("nombre_empleado"));
+                txtsalariobusqueda.setText(rs.getString("sueldo_empleado"));
+
+                puesto=rs.getString("codigo_puesto");
+                depto=rs.getString("codigo_departamento");
+
+                switch(puesto){
+                    case "P1":{showpuesto="Gerente";}break;
+                    case "P2":{showpuesto="Supervisor";}break;
+                    case "P3":{showpuesto="Contador";}break;
+                    case "P4":{showpuesto="Reclutador";}break;
+                    case "P5":{showpuesto="Programador";}break;
+                    case "P6":{showpuesto="Tecnico";}break;
+                    case "P7":{showpuesto="Planificador";}break;
+
+                }//fin switch puesto
+
+                switch(depto){
+                    case "D1":{showdepto="Proyectos";}break;
+                    case "D2":{showdepto="Informatica";}break;
+                    case "D3":{showdepto="Capacitacion  y Desarrollo";}break;
+                    case "D4":{showdepto="Reclutamiento y Seleccion";}break;
+                    case "D5":{showdepto="Nominas";}break;
+
+                }//fin switch depto
+
+                txtpuestobusqueda.setText(showpuesto);
+                txtdepart.setText(showdepto);
+
             } else {
-                JOptionPane.showMessageDialog(null, "Puesto no Encontrado");
+                JOptionPane.showMessageDialog(null, "Empleador no Encontrado");
             }
 
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, "No se ha podido Realizar la Busqueda");
 
         }
+
     }//GEN-LAST:event_btn_Busqueda_LoginActionPerformed
 
     private void txtLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLimpiarActionPerformed
 
-
-            txtcodigo_puesto.setText("");
-            txtnombre_puesto.setText("");
-            txtcodigo_puesto1.setText("");
-            txtnombre_puesto1.setText("");
+        txtcodigo_puesto.setText("");
+        txtnombre_puesto.setText("");
+        txtsalario.setText("");
+        txtcodigo_puesto1.setText("");
+        txtnombre_puesto1.setText("");
+        txtsalariobusqueda.setText("");
+        txtpuestobusqueda.setText("");
+        txtdepart.setText("");
 
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLimpiarActionPerformed
 
     private void btn_Busqueda_Login2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Busqueda_Login2ActionPerformed
 
-  try {
-             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/umg", "root", "");
-            PreparedStatement pst = cn.prepareStatement("delete from puesto where codigo_puesto = ?");
-            
+        try {
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/umg", "root", "");
+            PreparedStatement pst = cn.prepareStatement("delete from empleado where codigo_empleado = ?");
+
             pst.setString(1, txtcodigo_puesto.getText().trim());
             pst.executeUpdate();
-            
+
             txtcodigo_puesto.setText("");
+            txtnombre_puesto.setText("");
+            txtsalario.setText("");
             txtcodigo_puesto1.setText("");
             txtnombre_puesto1.setText("");
-            
-            
+            txtsalariobusqueda.setText("");
+            txtpuestobusqueda.setText("");
+            txtdepart.setText("");
+
             JOptionPane.showMessageDialog(null, "Puesto Eliminado");
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se ha podido Eliminar");
         }
 
-        
     }//GEN-LAST:event_btn_Busqueda_Login2ActionPerformed
 
     /**
@@ -261,14 +436,27 @@ public class Ingresp_empleado extends javax.swing.JFrame {
     private javax.swing.JButton btn_Busqueda_Login;
     private javax.swing.JButton btn_Busqueda_Login2;
     private javax.swing.JButton btn_Ingreso_Login;
+    private javax.swing.JComboBox<String> combodept;
+    private javax.swing.JComboBox<String> combopuesto;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JButton txtLimpiar;
     private javax.swing.JTextField txtcodigo_puesto;
     private javax.swing.JTextField txtcodigo_puesto1;
+    private javax.swing.JTextField txtdepart;
     private javax.swing.JTextField txtnombre_puesto;
     private javax.swing.JTextField txtnombre_puesto1;
+    private javax.swing.JTextField txtpuestobusqueda;
+    private javax.swing.JTextField txtsalario;
+    private javax.swing.JTextField txtsalariobusqueda;
     // End of variables declaration//GEN-END:variables
 }
