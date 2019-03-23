@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import javax.swing.JOptionPane;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -11,382 +5,252 @@ import javax.swing.table.DefaultTableModel;
 import java.text.DecimalFormat;
 import java.sql.*;
 
-
-/*
-0901-17-65 Antonio Manuel Alejandro Garcia Gonzalez.
-
-*/
-
 public class Inicio extends javax.swing.JFrame {
-
-    DecimalFormat format = new DecimalFormat("0.00");
-    //Variables sin notacion
-    int int_salarioBase, int_deducciones, int_percepciones,
-        int_totalProy, int_totalInfor, int_totalCapDes, int_totalRecSel, int_totalNomina, srandom;
-    double ISR, IGSS, double_sueldoLiquido;
-    
-    String str_nombre, str_departamento;
-    String matrizPlanilla [][]={}, matrizTotal [][]={{}, {}};
-    String vectEncabezado []={"Nombre","Departamento","Salario Base","ISR","IGSS","Deducciones","Percepciones","Sueldo Liquido"},
-            vectTotalEncabezado[] = {"Proyectos", "Informatica","Capacitacion y Desarrollo","Reclutamiento y Selección","Nomina"};
-    DefaultTableModel modeloTabla, modeloTotal;
     
     
-    Random rand = new Random();
+    DefaultTableModel tabla = new DefaultTableModel();
+    String IGSS, sueldo, ISR;
+    double ValorDetalle, Igss, ValorTotal=0;
     
-    
-    public void datosEmpleado(){ //Genera los datos del empleado
-       
-        srandom = rand.nextInt(3000); //Genera salario segun random    
-        int_salarioBase = 2742+srandom; //Salario base en Guatemala
-        int_deducciones = rand.nextInt(3000); // VAlores aleatorios
-        int_percepciones = rand.nextInt(3000);
-        
-        if(RBT_igssSi.isSelected()){//Calculo del IGSS  segun el radio buton
-            
-             IGSS =int_salarioBase*0.0483;
-     
-              
-        }else if(RBT_igssNo.isSelected()){
-            IGSS=0.00;
+    private void Clear(){
+        while (tabla.getRowCount() > 0) {
+               tabla.removeRow(0);
         }
-        
-         //Calculo del ISR segun el salario base
+    }
+    
+    public void ObtenerDatos(){
+        Clear();         
+        if ("".equals(txt_CodigoNomina.getText())){
+            JOptionPane.showMessageDialog(null,"No ha Completado Todos los Datos");
+        }else{
+            try{
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/umg", "root", "");
+            PreparedStatement pst = cn.prepareStatement("select encabezado_nomina.codigo_nomina, empleado.codigo_empleado,"
+            + "empleado.sueldo_empleado, empleado.IGSS from encabezado_nomina, empleado where codigo_nomina = ?");
+            pst.setString(1, txt_CodigoNomina.getText().trim());
+            ResultSet ConsultaNomina = pst.executeQuery();
+          
+            while(ConsultaNomina.next()){
+               Object []fila = new Object[4];
+               fila[0] = ConsultaNomina.getString("codigo_nomina");
+               fila[1] = ConsultaNomina.getString("codigo_empleado");
+               fila[2] = ConsultaNomina.getString("sueldo_empleado");
+               fila[3] = ConsultaNomina.getString("IGSS");
+               sueldo = fila[2].toString();
+               
+               if ((Double.parseDouble(sueldo)>2600) && (Double.parseDouble(sueldo)<5000))
+                    {
+                        fila[2]="C3"; 
+                        ValorDetalle = Double.parseDouble(sueldo)*0.03;
+                        fila[3] = (ValorDetalle);
+                    }
+                    else if ((Double.parseDouble(sueldo) >= 5000) &&(Double.parseDouble(sueldo) < 10000) )
+                    {
+                        fila[2]="C4"; 
+                        ValorDetalle = Double.parseDouble(sueldo)*0.05;
+                        fila[3] = (ValorDetalle);
+                    }
+                    else if (Double.parseDouble(sueldo) >= 10000)
+                    {
+                        fila[2]="C5"; 
+                        ValorDetalle = Double.parseDouble(sueldo)*0.1;
+                        fila[3] = (ValorDetalle);
+                    }
+                    else
+                    {
+                        fila[2]="C2"; 
+                        ValorDetalle = Double.parseDouble(sueldo)*0.00;
+                        fila[4] = (ValorDetalle);
+                    }
+               ValorTotal=ValorTotal+ValorDetalle;
+               tabla.addRow(fila);
+               
+           }
+
             
-         if ((int_salarioBase > 2600)&&(int_salarioBase < 5000)){
-             
-             ISR = int_salarioBase*0.03;
-         } else if ((int_salarioBase >= 5000) &&(int_salarioBase < 10000) ){
-             
-             ISR = int_salarioBase*0.05;
-         }else if (int_salarioBase >= 10000){
-             
-             ISR = int_salarioBase*0.1; 
-         }
-        
-        double_sueldoLiquido = int_salarioBase + int_percepciones - IGSS - ISR - int_deducciones; //Calcula el sueldo liquido
+           }catch (Exception e){
+           JOptionPane.showMessageDialog(null, "No Se Encuentra La Nomina");
+           }
+            
+           try{
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/umg", "root", "");
+            PreparedStatement pst = cn.prepareStatement("select encabezado_nomina.codigo_nomina, empleado.codigo_empleado,"
+            + "empleado.sueldo_empleado, empleado.IGSS from encabezado_nomina, empleado where codigo_nomina = ?");
+            pst.setString(1, txt_CodigoNomina.getText().trim());
+            ResultSet ConsultaNomina = pst.executeQuery();
+          
+            while(ConsultaNomina.next()){
+               Object []fila = new Object[4];
+               fila[0] = ConsultaNomina.getString("codigo_nomina");
+               fila[1] = ConsultaNomina.getString("codigo_empleado");
+               fila[2] = ConsultaNomina.getString("sueldo_empleado");
+               fila[3] = ConsultaNomina.getString("IGSS");
+               sueldo = fila[2].toString();
+               IGSS= fila[3].toString();
+               
+               if (Double.parseDouble(IGSS) == 1){
+                   fila[2]="C1";
+                   ValorDetalle =0.0483*Double.parseDouble(sueldo);
+                   fila[3] = (ValorDetalle);
+               }else{
+                   fila[2]="C1";
+                   ValorDetalle =0;
+                   fila[3] = (ValorDetalle);
+               }
+               ValorTotal=ValorTotal+ValorDetalle;
+               tabla.addRow(fila);
+               
+           }
+     
+           }catch (Exception e){
+           JOptionPane.showMessageDialog(null, "No Se Encuentra La Nomina");
+           }
+           try{
+            String ID = txt_CodigoNomina.getText().trim();
+
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/umg", "root", "");
+            PreparedStatement pst = cn.prepareStatement("update encabezado_nomina set Valor_Nomina = ? where codigo_nomina ='"+ ID +"'");
+            
+            pst.setString(1, String.valueOf(ValorTotal).trim());
+          
+            pst.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Se Actualizo La Nomina");
+     
+           }catch (Exception e){
+           JOptionPane.showMessageDialog(null, "No Se Actualizo La Nomina");
+           }
+        }
          
-        //Condicionales para determinar el nombre del departamento segun el Combo Box
-        
-        if(combx_Departamento.getSelectedItem()=="Proyectos"){ //Departamento Proyectos
-             
-            str_departamento="Proyectos";
-            int_totalProy += double_sueldoLiquido;
-            
-         }
-         if(combx_Departamento.getSelectedItem()=="Informatica"){ //Departamento Informatica
-             
-             str_departamento="Informatica";
-             int_totalInfor += double_sueldoLiquido;
-             
-         }
-         if(combx_Departamento.getSelectedItem()=="Capacitacion y Desarrollo"){ //Departamento Capacitacion y Desarrollo
-             
-             str_departamento="Capacitacion y Desarrollo";
-             int_totalCapDes += double_sueldoLiquido;
-             
-         }
-         if(combx_Departamento.getSelectedItem()=="Reclutamiento y Seleccion"){ //Departamento Reclutamiento y Seleccion
-             
-             str_departamento="Reclutamiento y Seleccion";
-             int_totalRecSel += double_sueldoLiquido;
-            
-         }
-         if(combx_Departamento.getSelectedItem()=="Nominas"){ //Departamento Nominas
-             
-             str_departamento="Nominas";
-             int_totalNomina += double_sueldoLiquido;
-             
-         }
-        
-           
     }
-    
-    public void ingresoEmpleado(){ //Ingresa al empleado a la tabla
-        
-        str_nombre = TXT_InsNombre.getText();
-        String Nombre, Departamento, salarioBase, tabISR, tabIGSS, Deducciones, Percepciones, sueldoLiquido;
-        
-        Nombre = str_nombre;
-        Departamento = str_departamento;
-        salarioBase = Integer.toString(int_salarioBase);
-        Deducciones = Integer.toString(int_deducciones);
-        Percepciones = Integer.toString(int_percepciones);
-        sueldoLiquido = String.valueOf(format.format(double_sueldoLiquido));
-        tabISR = String.valueOf(format.format(ISR));
-        tabIGSS = String.valueOf(format.format(IGSS));
-        
-        String temp [] ={Nombre, Departamento, salarioBase, tabISR,tabIGSS,Deducciones, Percepciones, sueldoLiquido};
-        modeloTabla.addRow(temp);
-        
-        
-        
-        
-    }
-    
-    public void sumaPlanilla(){//Ingreso de Suma del total de salarios de cada departamento
-        modeloTotal.setValueAt(Integer.toString(int_totalProy), 0, 0);
-        modeloTotal.setValueAt(Integer.toString(int_totalInfor), 0, 1);
-        modeloTotal.setValueAt(Integer.toString(int_totalCapDes), 0, 2);
-        modeloTotal.setValueAt(Integer.toString(int_totalRecSel), 0, 3);
-        modeloTotal.setValueAt(Integer.toString(int_totalNomina), 0, 4);  
-    }
- 
     public Inicio() {
         
         initComponents();
-        //Sintaxis para el guardado de los datos en la Tabla
-        modeloTabla = new DefaultTableModel(matrizPlanilla, vectEncabezado);// Se dice que el objeto Model se trabajara como una matriz
-        TAB_Planilla.setModel(modeloTabla);// Se ajusta el modelo de la tabla al especificado en Modelo
-        modeloTotal = new DefaultTableModel(matrizTotal, vectTotalEncabezado);
-        TAB_PlanillaTotal.setModel(modeloTotal);
+        this.setLocationRelativeTo(null);
+        setResizable(false);
+        this.Tabla_Detalles.setModel(tabla);
+        tabla.addColumn("Codigo Nomina");
+        tabla.addColumn("Codigo Empleado");
+        tabla.addColumn("Codigo Concepto");
+        tabla.addColumn("Valor Detalle");
     }
 
-    //Metodo donde se llenan los datos para llenar la table
    
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        TXT_InsNombre = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
         BT_InsNombre = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        combx_Departamento = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        RBT_igssSi = new javax.swing.JRadioButton();
-        RBT_igssNo = new javax.swing.JRadioButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        TAB_PlanillaTotal = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TAB_Planilla = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        Tabla_Detalles = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
+        txt_CodigoNomina = new javax.swing.JTextField();
+        BtnEmpleado = new javax.swing.JButton();
+        BtnNominaEn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jButton1.setText("Busqueda Nomina");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
-        TXT_InsNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TXT_InsNombreActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Ingresar Empleado");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        BT_InsNombre.setText("Ingresar");
+        BT_InsNombre.setText("Buscar");
         BT_InsNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BT_InsNombreActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Mostrar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        Tabla_Detalles.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo Nomina", "Codigo Empleado", "Codigo Concepto", "Valor Detalle"
+            }
+        ));
+        jScrollPane1.setViewportView(Tabla_Detalles);
+
+        jLabel5.setText("Codigo Nomina");
+
+        BtnEmpleado.setText("Ingreso Nuevo Empleado");
+        BtnEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                BtnEmpleadoActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Departamento: ");
-
-        combx_Departamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Seleccione-", "Proyectos", "Informatica", "Capacitacion y Desarrollo", "Reclutamiento y Seleccion", "Nominas", " " }));
-
-        jLabel3.setText("IGSS");
-
-        RBT_igssSi.setText("Sí");
-
-        RBT_igssNo.setText("No");
-
-        TAB_PlanillaTotal.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Proyectos", "Informatica", "Capacitacion & Desarrollo", "Reclutamiento y Selección", "Nomina"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+        BtnNominaEn.setText("Mostrar Nomina Encabezado");
+        BtnNominaEn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnNominaEnActionPerformed(evt);
             }
         });
-        jScrollPane2.setViewportView(TAB_PlanillaTotal);
-
-        TAB_Planilla.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nombre", "Departamento", "Salario Base", "ISR", "IGSS", "Deducciones", "Percepciones", "Sueldo Liquido"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(TAB_Planilla);
-
-        jLabel4.setText("Total de Salarios Segun Departamentos");
-
-        jLabel1.setText("Nombre:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(40, 40, 40)
-                                .addComponent(TXT_InsNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(89, 89, 89)
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(txt_CodigoNomina, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(BT_InsNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(119, 119, 119)
+                                .addComponent(BtnEmpleado)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(BT_InsNombre))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(combx_Departamento, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(RBT_igssSi)
-                                            .addComponent(RBT_igssNo))
-                                        .addGap(261, 261, 261)))))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(49, 49, 49)
-                                .addComponent(jButton3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(57, 57, 57)))))
+                                .addComponent(BtnNominaEn, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 108, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TXT_InsNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(BT_InsNombre)
-                        .addComponent(jButton1)
-                        .addComponent(jButton2)
-                        .addComponent(jButton3)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(combx_Departamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(9, 9, 9)
-                        .addComponent(RBT_igssSi)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(RBT_igssNo))))
+                    .addComponent(BtnNominaEn, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                    .addComponent(BtnEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txt_CodigoNomina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BT_InsNombre))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new EncabezadoNomina().setVisible(true);
-        this.dispose();
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void TXT_InsNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXT_InsNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TXT_InsNombreActionPerformed
-
     private void BT_InsNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_InsNombreActionPerformed
-        //Ingreso de trabajadores a planilla
-        if ("".equals(TXT_InsNombre.getText())||combx_Departamento.getSelectedItem()=="-Seleccione-"){ //Comprobar si el texto está en blanco.
-
-            JOptionPane.showMessageDialog(null, "Error, verifique datos del empleado");
-
-        }else{
-            datosEmpleado();
-            ingresoEmpleado();
-            sumaPlanilla();
-
-        }
+        ObtenerDatos();
 
     }//GEN-LAST:event_BT_InsNombreActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
-        try{
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/umg", "root", "");
-            PreparedStatement pst = cn.prepareStatement("SELECT empleado.nombre_empleado FROM empleado WHERE empleado.codigo_departamento=departamento.codigo_departamento ");
-
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-
-                TAB_Planilla.setValueAt(rs.getString("empleado.nombre_empleado"), (0), 0);
-
-            }
-            cn.close();
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null,"Error no se puede obtener el nombre y departamento del empleado"+ e);
-        }
-
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+    private void BtnEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEmpleadoActionPerformed
         new Ingresp_empleado().setVisible(true);
         this.dispose();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_BtnEmpleadoActionPerformed
+
+    private void BtnNominaEnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNominaEnActionPerformed
+        new EncabezadoNomina().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BtnNominaEnActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.dispose();
+        Login ingreso = new Login();
+        ingreso.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -425,20 +289,11 @@ public class Inicio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BT_InsNombre;
-    private javax.swing.JRadioButton RBT_igssNo;
-    private javax.swing.JRadioButton RBT_igssSi;
-    private javax.swing.JTable TAB_Planilla;
-    private javax.swing.JTable TAB_PlanillaTotal;
-    private javax.swing.JTextField TXT_InsNombre;
-    private javax.swing.JComboBox<String> combx_Departamento;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JButton BtnEmpleado;
+    private javax.swing.JButton BtnNominaEn;
+    private javax.swing.JTable Tabla_Detalles;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField txt_CodigoNomina;
     // End of variables declaration//GEN-END:variables
 }
