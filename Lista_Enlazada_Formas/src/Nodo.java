@@ -19,8 +19,7 @@ public class Nodo {
 	}
         
 	public void verNodo(){
-          //*  tarealista.setText(" ( "+info+" ")
-		System.out.print("(  "+info+" )");
+       
 	}
     
 }
