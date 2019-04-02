@@ -7,7 +7,7 @@ package ListasEnlazadas;
 
 /**
  *
- * @author EDUARDO
+ * 
  */
 public class Inicio {
 
@@ -28,7 +28,8 @@ public class Inicio {
         miLista.borrarPrimero();
 	
 	System.out.println(miLista.Listar());
-// TODO code application logic here
+
+        
     }
     
 }
