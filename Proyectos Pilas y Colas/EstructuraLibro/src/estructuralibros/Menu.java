@@ -549,7 +549,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void btn_Borrar_ListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Borrar_ListaActionPerformed
           //se llama al metodo para limpiar la lista y no se sobreescriban los datos 
-        LimpiarLista();
+         LimpiarLista();
         //se llama al metodo para eliminar toda la lista
          EliminarLista();
          //se muestran los datos en la tabla
