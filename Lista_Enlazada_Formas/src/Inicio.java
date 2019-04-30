@@ -212,7 +212,9 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGenerar_ListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerar_ListaActionPerformed
-       //se llama al metodo de limpiar para ir actualizando la lista 
+
+        
+//se llama al metodo de limpiar para ir actualizando la lista 
        LimpiarLista();
       //se genera una variable que sera aleatoria para llenar los valores de la lista
        Dato_Pedido=Numero_Aleatorio.nextInt(10)+1;
