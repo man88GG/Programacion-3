@@ -96,6 +96,7 @@ public class Inicio extends javax.swing.JFrame {
           
             cabeza=cabeza.siguiente;
         }
+        
         // metodo para eliminar la lista completa
         
         public void EliminarLista(){
@@ -112,10 +113,9 @@ public class Inicio extends javax.swing.JFrame {
             txtAutor.setText("");
             txtLibro.setText("");
             txtisbn.setText("");
-           
-            
+               
         }
-        
+        //metodo para verificar si la cola esta llena o vacia
            public void VerificarCola(){
             //se hace una condicion if para verificar si el puntero esta apuntando a null verificando si esta vacia
         if (cabeza==null) {
@@ -152,15 +152,18 @@ public class Inicio extends javax.swing.JFrame {
             }
         }
         
+        //metodo para que se conozca el tamaño de la cola actual
         public void Tamaño(){
-           
+                //variable contador que ira aumentando en base a la cantidad de datos de la cola
                 int Contador = 0;
 		Nodo aux=cabeza;
+                //ciclo que recorrera toda la cola
 		while (aux!=null){
                        
 			aux=aux.siguiente;
                         Contador = Contador + 1;
 		}
+                //mensaje mostrando el tamaño de la cola
                 JOptionPane.showMessageDialog(null,"El Tamaño de la Cola es: "+Contador);
         }
         
@@ -180,9 +183,9 @@ public class Inicio extends javax.swing.JFrame {
         lbl_Isbn = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         btnEliminar_Primer_Dato = new javax.swing.JButton();
-        btn_Borrar_Lista = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_Borrar_Cola = new javax.swing.JButton();
+        Btn_Verificar_Cola = new javax.swing.JButton();
+        Btn_Tamaño_Cola = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -218,24 +221,24 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
-        btn_Borrar_Lista.setText("Borrar Cola");
-        btn_Borrar_Lista.addActionListener(new java.awt.event.ActionListener() {
+        btn_Borrar_Cola.setText("Borrar Cola");
+        btn_Borrar_Cola.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_Borrar_ListaActionPerformed(evt);
+                btn_Borrar_ColaActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Verificacion Cola");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        Btn_Verificar_Cola.setText("Verificacion Cola");
+        Btn_Verificar_Cola.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                Btn_Verificar_ColaActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Tamaño Cola");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Btn_Tamaño_Cola.setText("Tamaño Cola");
+        Btn_Tamaño_Cola.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                Btn_Tamaño_ColaActionPerformed(evt);
             }
         });
 
@@ -260,12 +263,12 @@ public class Inicio extends javax.swing.JFrame {
                     .addComponent(txtisbn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(btn_Borrar_Lista)
+                    .addComponent(Btn_Tamaño_Cola)
+                    .addComponent(btn_Borrar_Cola)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btnEliminar_Primer_Dato, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
-                    .addComponent(jButton3))
+                    .addComponent(Btn_Verificar_Cola))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -291,11 +294,11 @@ public class Inicio extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar_Primer_Dato)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
+                        .addComponent(Btn_Verificar_Cola)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_Borrar_Lista)))
+                        .addComponent(btn_Borrar_Cola)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(Btn_Tamaño_Cola)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -305,19 +308,21 @@ public class Inicio extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -352,7 +357,7 @@ public class Inicio extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnEliminar_Primer_DatoActionPerformed
 
-    private void btn_Borrar_ListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Borrar_ListaActionPerformed
+    private void btn_Borrar_ColaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Borrar_ColaActionPerformed
         //se llama al metodo para limpiar la lista y no se sobreescriban los datos
         LimpiarLista();
         //se llama al metodo para eliminar toda la lista
@@ -361,17 +366,17 @@ public class Inicio extends javax.swing.JFrame {
         Mostrar();
         //se limpian las cajas de texto en caso se quiso escribir algo en las cajas de texto
         LimpiarTextFields();
-    }//GEN-LAST:event_btn_Borrar_ListaActionPerformed
+    }//GEN-LAST:event_btn_Borrar_ColaActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void Btn_Verificar_ColaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Verificar_ColaActionPerformed
         //se llama al metodo de verificacion
         VerificarCola();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_Btn_Verificar_ColaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+    private void Btn_Tamaño_ColaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Tamaño_ColaActionPerformed
+//se llama al metodo de tamaño para obtener el tamaño de la cola
         Tamaño();       
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_Btn_Tamaño_ColaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -409,12 +414,12 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Btn_Tamaño_Cola;
+    private javax.swing.JButton Btn_Verificar_Cola;
     private javax.swing.JTable Tbl_Lista;
     private javax.swing.JButton btnEliminar_Primer_Dato;
-    private javax.swing.JButton btn_Borrar_Lista;
+    private javax.swing.JButton btn_Borrar_Cola;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_Autor;
