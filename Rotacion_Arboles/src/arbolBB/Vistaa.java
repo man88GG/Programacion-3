@@ -200,6 +200,7 @@ public class Vistaa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInsertarActionPerformed
+
         try {
             int dato = Integer.parseInt(txtdato.getText());
             if (this.simulador.insertar(dato)) {

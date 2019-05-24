@@ -10,13 +10,14 @@ package arbolBB;
  * @author
  */
 public class Nodo {
-    private int dato;
+    public int dato, equilibrado;;
     public Nodo izq,der;
 
     public Nodo(int dato, Nodo izq, Nodo der) {
         this.dato = dato;
         this.izq = izq;
         this.der = der;
+        this.equilibrado=0;
     }
 
     public int getDato() {

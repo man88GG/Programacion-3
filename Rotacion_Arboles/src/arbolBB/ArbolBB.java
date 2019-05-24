@@ -23,34 +23,160 @@ public class ArbolBB {
     public ArbolBB() {
         raiz = null;
     }
-    //metodo para agregar un nuevo nodo 
-    public boolean agregar(int dato) {
-        Nodo nuevo = new Nodo(dato, null, null);
-        insertar(nuevo, raiz);
-        return true;
-    }
     
-    //Metodo para insertar un dato en el arbol...no acepta repetidos :)
-    public void insertar(Nodo nuevo, Nodo pivote) {
-        if (this.raiz == null) {
-            raiz = nuevo;
-        } else {
-            if (nuevo.getDato() <= pivote.getDato()) {
-                if (pivote.getIzq() == null) {
-                    pivote.setIzq(nuevo);
-                } else {
-                    insertar(nuevo, pivote.getIzq());
-                }
-            } else {
-                if (pivote.getDer() == null) {
-                    pivote.setDer(nuevo);
-                } else {
-                    insertar(nuevo, pivote.getDer());
+    
+     public int obtenerfe(Nodo r){
+        //si el nodo esta vacío devuelve -1
+        if(r==null){
+            return -1;
+        //si no está vacío devuelve el equilibrado
+        }else{
+            return r.equilibrado;
+        } 
+    }
+     
+    
+      public Nodo rotacionIzq(Nodo r){
+        //se hace un nodo auxiliar que se iguala al nodo izquierdo
+        Nodo aux= r.izq;
+        //nodo izquierdo se iguala a la parte derecha del nodo auxiliar
+        r.izq=aux.der;
+        //la parte derecha del nodo auxiliar se iguala al nodo mandado al método
+        aux.der=r;
+        //se  equilibra máximo del nodo r entre la parte derecha e izquierda
+        r.equilibrado=Math.max(obtenerfe(r.izq), obtenerfe(r.der))+1;
+        //se equilibra máximo del nodo auxiliar entre la parte derecha e izquierda
+        aux.equilibrado=Math.max(obtenerfe(aux.izq),obtenerfe(aux.der))+1;
+        //devuelve auxiliar
+        return aux;
+    }
+    //método para rotar el nodo a la izquierda
+    public Nodo rotacionDer(Nodo r){
+        //se hace un nodo auxiliar que se iguala al nodo derecho
+        Nodo aux= r.der;
+        //nodo derecho se iguala a la parte izquierda del nodo auxiliar
+        r.der=aux.izq;
+        //la parte izquierda del nodo auxiliar se iguala al nodo mandado al método
+        aux.izq=r;
+        //se saca el equilibrio máximo del nodo r entre la parte derecha e izquierda
+        r.equilibrado=Math.max(obtenerfe(r.izq), obtenerfe(r.der))+1;
+        //se saca el equilibrio máximo del nodo auxiliar entre la parte derecha e izquierda
+        aux.equilibrado=Math.max(obtenerfe(aux.izq),obtenerfe(aux.der))+1;
+        //devuelve auxiliar
+        return aux;
+    }
+    //método para rotar doblemente el nodo a la izquierda
+    public Nodo rotacionDobleIzq(Nodo r){
+        //se crea nodo auxiliar
+        Nodo aux;
+        //la parte izquierda del nodo r se iguala al resultado de llamar al método de rotar a la derecha
+        //mandando de parámetro el lado izquierdo del nodo r
+        r.izq=rotacionDer(r.izq);
+        //el nodo auxiliar se iguala al resultado de llamar al método de rotar a la izquierda del nodo r
+        aux=rotacionIzq(r);
+        //devuelve auxiliar
+        return aux;
+    }
+    public Nodo rotacionDobleDer(Nodo r){
+        //se crea nodo auxiliar
+        Nodo aux;
+        //la parte derecha del nodo r se iguala al resultado de llamar al método de rotar a la izquierda
+        //mandando de parámetro el lado derecho del nodo r
+        r.der=rotacionIzq(r.der);
+        //el nodo auxiliar se iguala al resultado de llamar al método de rotar a la derecha del nodo r
+        aux=rotacionDer(r);
+        //devuelve auxiliar
+        return aux;
+    }
+    public Nodo insertAVL(Nodo nuevo, Nodo actual){
+        //se crea nodo auxiliar y se iguala a 
+        Nodo auxiliar=actual;
+        //si el dato del nodo nuevo es menor al dato del nodo actual
+         if(nuevo.dato<actual.dato){
+             //si el nodo actual no tiene parte izquierda entonces se inserta el nodo
+             //nuevo en la parte izquierda del nodo actual
+            if(actual.izq==null){
+                actual.izq=nuevo;
+            //sino
+            }else{
+                //la parte izquierda del nodo actual se iguala al resultado de llamar el método de insertarAVL
+                //mandando como parámetro el valor nuevo y la parte izquierda del nodo actual
+                actual.izq=insertAVL(nuevo, actual.izq);
+                //si el equilibrio de el lado izquierdo con el derecho es igual a 2
+                if(obtenerfe(actual.izq)-obtenerfe(actual.der)==2){
+                    //si el dato del nodo nuevo es menor al dato de la parte izquierda del nodo actual
+                    if(nuevo.dato<actual.izq.dato){
+                        //auxiliar se iguala al resutltado de enviar el nodo actual en el método de rotación de izquierda
+                        auxiliar=rotacionIzq(actual);
+                    }else{
+                        //auxiliar se iguala al resutltado de enviar el nodo actual en el método de rotación doble de izquierda
+                        auxiliar=rotacionDobleIzq(actual);
+                    }
                 }
             }
-        }
-
+            //si el dato del nodo nuevo es menor al dato del nodo actual
+         }else if(nuevo.dato>actual.dato){
+             //si el nodo actual no tiene parte derecha entonces se inserta el nodo
+             //nuevo en la parte derecha del nodo actual
+            if(actual.der==null){
+                actual.der=nuevo;
+            //sino
+            }else{
+                //la parte derecha del nodo actual se iguala al resultado de llamar el método de insertarAVL
+                //mandando como parámetro el valor nuevo y la parte derecha del nodo actual
+                actual.der=insertAVL(nuevo,actual.der);
+                //si el equilibrio de el lado derecho con el izquierdo es igual a 2
+                if(obtenerfe(actual.der)-obtenerfe(actual.izq)==2){
+                    //si el dato del nodo nuevo es mayor al dato de la parte derecha del nodo actual
+                    if(nuevo.dato>actual.der.dato){
+                        //auxiliar se iguala al resutltado de enviar el nodo actual en el método de rotación de derecha
+                        auxiliar=rotacionDer(actual);
+                    }else{
+                        //auxiliar se iguala al resutltado de enviar el nodo actual en el método de rotación doble de derecha
+                        auxiliar=rotacionDobleDer(actual);
+                    }
+                }
+            }
+            //de lo contrario se muestra de que no se pueden colocar nodos duplicados
+         }else{
+            System.out.println("Nodo duplicado, no se puede colocar nodos duplicados");
+         }
+         //actualizando altura
+         //si la parte izquierda del nodo actual está vacía y la parte derecha del nodo actual no está vacía
+         if((actual.izq==null)&&(actual.der!=null)){
+             //el equilibrio es igual al equilibrio de la parte derecha del nodo actual +1
+            actual.equilibrado=actual.der.equilibrado+1;
+        //si la parte derecha del nodo actual está vacía y la parte izquierda del nodo actual no está vacía
+         }else if((actual.der==null)&&(actual.izq!=null)){
+             //el equilibrio es igual al equilibrio de la parte izquierda del nodo actual +1
+            actual.equilibrado=actual.izq.equilibrado+1;         
+         }else{
+             //el equilibrio es igual valor máximo del valor de equilibrio entre la parte izquierda y la parte derecha
+            actual.equilibrado=Math.max(obtenerfe(actual.izq),obtenerfe(actual.der))+1;         
+         }
+         //devuleve auxiliar
+         return auxiliar;
     }
+    
+    
+    //Metodo para insertar un dato en el arbol...no acepta repetidos :)
+  public boolean insertar(int d){
+        Nodo nuevo= new Nodo(d,null,null);
+        //si la raiz esta vacía
+        if(raiz==null){
+            //se ingresa el nodo nuevo en la raíz
+            raiz=nuevo;
+        }else{
+            //sino en la raiz se inserta lo obtenido de llamar el método de insertarAVL mandando como parámetro el 
+            //valor nuevo y la raiz
+            raiz=insertAVL(nuevo,raiz);
+        }
+        //devuelve verdadero
+        return true;
+    }
+    //método para obtener la raíz del arbol
+    
+    
 //metodo para obtener la raiz del arbol binario
     public Nodo getRaiz() {
         return raiz;

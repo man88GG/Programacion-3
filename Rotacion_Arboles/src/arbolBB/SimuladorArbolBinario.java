@@ -11,13 +11,12 @@ import javax.swing.JPanel;
  */
 public class SimuladorArbolBinario {
 
-    ArbolBB miArbol = new ArbolBB();
-
+   ArbolBB miArbol = new ArbolBB();
     public SimuladorArbolBinario() {
     }
 
     public boolean insertar(Integer dato) {
-        return (this.miArbol.agregar(dato));
+        return (this.miArbol.insertar(dato));
     }
     //metodo para mostrar los recorridos del arbol
     public String preOrden() {
@@ -35,9 +34,8 @@ public class SimuladorArbolBinario {
         return (recorrido(it, "Recorrido PosOrden"));
     }
     
-    //metodo para poder mostrar los tipos de recorrido
+    //metodo para poder mostrar los tipos d recorrido
     private String recorrido(LinkedList it, String msg) {
-        
         int i = 0;
         String r = msg + "\n";
         while (i < it.size()) {
@@ -46,8 +44,6 @@ public class SimuladorArbolBinario {
         }
         return (r);
     }
-    
-    
     //Metodo para buscar dato en el nodo
     public String buscar(Integer dato) {
         boolean siEsta = this.miArbol.existe(dato);
