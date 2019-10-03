@@ -1,3 +1,5 @@
+//
+//
 //declaracion de puertos
 //int Ledg4 es una variable, a lo que esta igualado es un puerto del arduino
 int LEDg4 = 37; //fin g
