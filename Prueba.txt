@@ -1,0 +1,233 @@
+//declaracion de puertos
+//int Ledg4 es una variable, a lo que esta igualado es un puerto del arduino
+int LEDg4 = 37; //fin g
+int LEDg3 = 36;
+int LEDg2 = 35;
+int LEDg1 = 34; //inicio g
+int LEDf4 = 33; //fin f
+int LEDf3 = 32;
+int LEDf2 = 31;
+int LEDf1 = 30; //inicio f
+int LEDe4 = 29; //fin e
+int LEDe3 = 28;
+int LEDe2 = 27;
+int LEDe1 = 26; //inicio e
+int LEDd4 = 25; //fin d
+int LEDd3 = 24;
+int LEDd2 = 23;
+int LEDd1 = 22; //inicio d
+int LEDc4 = 13; //fin c
+int LEDc3 = 12; 
+int LEDc2 = 11;
+int LEDc1 = 10; //inicio c
+int LEDb4 = 9; //fin b
+int LEDb3 = 8;
+int LEDb2 = 7;
+int LEDb1 = 6; //inicio b
+int LEDa4 = 5; //fin a
+int LEDa3 = 4;
+int LEDa2 = 3;
+int LEDa1 = 2; //inicio a
+
+int data;
+
+void setup() {
+ //se declara el inicio del puerto en 9600 siempre
+ Serial.begin(9600);
+ //se declaran los puertos anteriores a entrada o salida de datos, en este caso
+ //es de salida porque solo se manda una señal para prender la LED
+ pinMode(LEDg4, OUTPUT); //fin g
+ pinMode(LEDg3, OUTPUT);
+ pinMode(LEDg2, OUTPUT);
+ pinMode(LEDg1, OUTPUT); //inicio g
+ pinMode(LEDf4, OUTPUT); //fin f
+ pinMode(LEDf3, OUTPUT);
+ pinMode(LEDf2, OUTPUT);
+ pinMode(LEDf1, OUTPUT); //inicio f
+ pinMode(LEDe4, OUTPUT); //fin e
+ pinMode(LEDe3, OUTPUT);      
+ pinMode(LEDe2, OUTPUT); 
+ pinMode(LEDe1, OUTPUT);  //inicio e
+ pinMode(LEDd4, OUTPUT);  //fin d
+ pinMode(LEDd3, OUTPUT); 
+ pinMode(LEDd2, OUTPUT); 
+ pinMode(LEDd1, OUTPUT);  //inicio d
+ pinMode(LEDc4, OUTPUT); //fin c
+ pinMode(LEDc3, OUTPUT);
+ pinMode(LEDc2, OUTPUT);
+ pinMode(LEDc1, OUTPUT); //inicio c
+ pinMode(LEDb4, OUTPUT);  //fin b
+ pinMode(LEDb3, OUTPUT);      
+ pinMode(LEDb2, OUTPUT); 
+ pinMode(LEDb1, OUTPUT);  //inicio b
+ pinMode(LEDa4, OUTPUT);  //fin a
+ pinMode(LEDa3, OUTPUT); 
+ pinMode(LEDa2, OUTPUT); 
+ pinMode(LEDa1, OUTPUT);  //inicio a
+ 
+
+
+}
+
+void loop(){
+
+if(Serial.available()){
+//La variable data obtiene el valor de la programacion de Visual
+data=Serial.read();
+
+//Condicion para que prenda una luz, el 2 es el numero de puerto
+//HIGH es prendido, LOW es apagado
+  if(data=='A'){
+    digitalWrite(2,HIGH);
+  }else if(data=='a'){
+    digitalWrite(2,LOW);
+  }
+
+ if(data=='B'){
+    digitalWrite(3,HIGH);
+  }else if(data=='b'){
+    digitalWrite(3,LOW);
+  }
+
+   if(data=='C'){
+    digitalWrite(4,HIGH);
+  }else if(data=='c'){
+    digitalWrite(4,LOW);
+  }
+
+  if(data=='D'){
+    digitalWrite(5,HIGH);
+  }else if(data=='d'){
+    digitalWrite(5,LOW);
+  }
+
+  if(data=='E'){
+    digitalWrite(6,HIGH);
+  }else if(data=='e'){
+    digitalWrite(6,LOW);
+  }
+
+  if(data=='F'){
+    digitalWrite(7,HIGH);
+  }else if(data=='f'){
+    digitalWrite(7,LOW);
+  }
+
+  if(data=='G'){
+    digitalWrite(8,HIGH);
+  }else if(data=='g'){
+    digitalWrite(8,LOW);
+  }
+
+  if(data=='H'){
+    digitalWrite(9,HIGH);
+  }else if(data=='h'){
+    digitalWrite(9,LOW);
+  }
+
+  if(data=='I'){
+    digitalWrite(10,HIGH);
+  }else if(data=='i'){
+    digitalWrite(10,LOW);
+  }
+
+  if(data=='J'){
+    digitalWrite(11,HIGH);
+  }else if(data=='j'){
+    digitalWrite(11,LOW);
+  }
+
+  if(data=='K'){
+    digitalWrite(12,HIGH);
+  }else if(data=='k'){
+    digitalWrite(12,LOW);
+  }
+  if(data=='L'){
+    digitalWrite(13,HIGH);
+  }else if(data=='l'){
+    digitalWrite(13,LOW);
+  }
+  if(data=='M'){
+    digitalWrite(22,HIGH);
+  }else if(data=='m'){
+    digitalWrite(22,LOW);
+  }
+  if(data=='N'){
+    digitalWrite(23,HIGH);
+  }else if(data=='n'){
+    digitalWrite(23,LOW);
+  }
+  if(data=='O'){
+    digitalWrite(24,HIGH);
+  }else if(data=='o'){
+    digitalWrite(24,LOW);
+  }
+  if(data=='P'){
+    digitalWrite(25,HIGH);
+  }else if(data=='p'){
+    digitalWrite(25,LOW);
+  }
+    if(data=='Q'){
+    digitalWrite(26,HIGH);
+  }else if(data=='q'){
+    digitalWrite(26,LOW);
+  }
+    if(data=='R'){
+    digitalWrite(27,HIGH);
+  }else if(data=='r'){
+    digitalWrite(27,LOW);
+  }
+    if(data=='S'){
+    digitalWrite(28,HIGH);
+  }else if(data=='s'){
+    digitalWrite(28,LOW);
+  }
+    if(data=='T'){
+    digitalWrite(29,HIGH);
+  }else if(data=='t'){
+    digitalWrite(29,LOW);
+  }
+    if(data=='U'){
+    digitalWrite(30,HIGH);
+  }else if(data=='u'){
+    digitalWrite(30,LOW);
+  }
+    if(data=='V'){
+    digitalWrite(31,HIGH);
+  }else if(data=='v'){
+    digitalWrite(31,LOW);
+  }
+    if(data=='W'){
+    digitalWrite(32,HIGH);
+  }else if(data=='w'){
+    digitalWrite(32,LOW);
+  }
+    if(data=='X'){
+    digitalWrite(33,HIGH);
+  }else if(data=='x'){
+    digitalWrite(33,LOW);
+  }
+    if(data=='Y'){
+    digitalWrite(34,HIGH);
+  }else if(data=='y'){
+    digitalWrite(34,LOW);
+  }
+    if(data=='Z'){
+    digitalWrite(35,HIGH);
+  }else if(data=='z'){
+    digitalWrite(35,LOW);
+  }
+    if(data=='1'){
+    digitalWrite(36,HIGH);
+  }else if(data=='9'){
+    digitalWrite(36,LOW);
+  }
+    if(data=='2'){
+    digitalWrite(37,HIGH);
+  }else if(data=='8'){
+    digitalWrite(37,LOW);
+  }
+  
+ 
+ }
+}
