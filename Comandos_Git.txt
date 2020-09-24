@@ -1,4 +1,4 @@
-						ACTUALIZAR RAMA
+						ACTUALIZAR RAMA :D
 1. 	git clone "HTTPS DE LA RAMA"
 2. 	cd "Nombre repositorio"
 3. 	git checkout "Nombre de la Rama"
