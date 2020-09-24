@@ -1,0 +1,24 @@
+						ACTUALIZAR RAMA
+1. 	git clone "HTTPS DE LA RAMA"
+2. 	cd "Nombre repositorio"
+3. 	git checkout "Nombre de la Rama"
+4. 	git branch //Debe mostrar en verde el nombre de la rama y en blanco el master//
+5. 	git status
+6. 	git add .
+7. 	git commit -m "Nombre del Commit"
+8. 	git pull origin "Nombre de la rama"
+9. 	git push origin "Nombre de la rama"
+10.	git pull origin "Nombre de la rama"
+
+
+					ACTUALIZAR RAMA A RAMA
+1. 	git pull origin "Nombre de la rama amiga"
+2. 	git status
+3. 	git add .
+4. 	git commit -m "Nombre del Commit"
+5. 	git status
+6. 	Si se quiere actualizar la rama hacer desde el paso 6. de "ACTUALIZAR RAMA"
+
+radios dependiendo tipo consulta
+en un panel
+					
