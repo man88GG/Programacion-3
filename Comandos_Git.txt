@@ -10,8 +10,8 @@
 9. 	git push origin "Nombre de la rama"
 10.	git pull origin "Nombre de la rama"
 
-
 					ACTUALIZAR RAMA A RAMA
+					
 1. 	git pull origin "Nombre de la rama amiga"
 2. 	git status
 3. 	git add .
