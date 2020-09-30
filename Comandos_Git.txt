@@ -19,6 +19,6 @@
 5. 	git status
 6. 	Si se quiere actualizar la rama hacer desde el paso 6. de "ACTUALIZAR RAMA"
 
-radios dependiendo tipo consulta
-en un panel
+los radios dependen del tipo de consulta.
+colocarlos en un panel.
 					
