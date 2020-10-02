@@ -1,4 +1,4 @@
-						ACTUALIZAR RAMA :D
+						ACTUALIZAR RAMA 
 1. 	git clone "HTTPS DE LA RAMA"
 2. 	cd "Nombre repositorio"
 3. 	git checkout "Nombre de la Rama"
@@ -19,6 +19,5 @@
 5. 	git status
 6. 	Si se quiere actualizar la rama hacer desde el paso 6. de "ACTUALIZAR RAMA"
 
-los radios dependen del tipo de consulta.
-colocarlos en un panel.
+
 					
